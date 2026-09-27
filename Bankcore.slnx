@@ -1,0 +1,40 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/AuthService/" />
+  <Folder Name="/src/Services/AuthService/Api/">
+    <Project Path="src/Services/AuthService/Api/Bankcore.Auth.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/AuthService/Application/">
+    <Project Path="src/Services/AuthService/Application/Bankcore.Auth.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/AuthService/Domain/">
+    <Project Path="src/Services/AuthService/Domain/Bankcore.Auth.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/AuthService/Infrastructure/">
+    <Project Path="src/Services/AuthService/Infrastructure/Bankcore.Auth.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/TransactionsService/" />
+  <Folder Name="/src/Services/TransactionsService/Api/">
+    <Project Path="src/Services/TransactionsService/Api/Bankcore.Transactions.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/TransactionsService/Application/">
+    <Project Path="src/Services/TransactionsService/Application/Bankcore.Transactions.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/TransactionsService/Domain/">
+    <Project Path="src/Services/TransactionsService/Domain/Bankcore.Transactions.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/TransactionsService/Infrastructure/">
+    <Project Path="src/Services/TransactionsService/Infrastructure/Bankcore.Transactions.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/AuthService.Domain.Tests/">
+    <Project Path="tests/AuthService.Domain.Tests/Bankcore.Auth.Domain.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/TransactionsService.Domain.Tests/">
+    <Project Path="tests/TransactionsService.Domain.Tests/Bankcore.Transactions.Domain.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/TransactionsService.Infrastructure.Tests/">
+    <Project Path="tests/TransactionsService.Infrastructure.Tests/Bankcore.Transactions.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

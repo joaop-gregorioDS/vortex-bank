@@ -1,0 +1,12 @@
+{
+  "name": "Vortex Bank",
+  "short_name": "Vortex Bank",
+  "start_url": "/entrar",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c03",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

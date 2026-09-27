@@ -1,0 +1,43 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / VS Code / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node & Frontend
+node_modules/
+web/node_modules/
+dist/
+web/dist/
+.vite/
+.vite-temp/
+
+# Environment and Secrets
+.env
+.env.*
+!.env.example
+.keys/
+.tools/
+appsettings.*.local.json
+*.pem
+
+# Test & OS files
+TestResults/
+*.received.*
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.DS_Store

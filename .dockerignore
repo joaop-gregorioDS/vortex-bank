@@ -1,0 +1,7 @@
+**/.git
+**/.tools
+**/.keys
+**/bin
+**/obj
+web/node_modules
+web/dist
