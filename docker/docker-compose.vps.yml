@@ -1,0 +1,108 @@
+name: vortexbank
+
+services:
+  # 1. Gateway Nginx & Frontend SPA React 19
+  gateway:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gateway
+    container_name: vortexbank_gateway
+    restart: always
+    ports:
+      # Exposição exclusiva no loopback local para encaminhamento pelo Nginx Host
+      - "127.0.0.1:5060:80"
+    depends_on:
+      - auth-api
+      - transactions-api
+    networks:
+      - vortexbank_net
+
+  # 2. Microsserviço de Autenticação .NET 10 (C#)
+  auth-api:
+    build:
+      context: ..
+      dockerfile: src/Services/AuthService/Api/Dockerfile
+    container_name: vortexbank_auth_api
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__AuthDb: Host=auth-db;Port=5432;Database=vortexbank_auth;Username=vortexbank_user;Password=vortexbank_secure_pass_2026
+      KEY_DIR: /keys
+      Swagger__PathBase: /swagger/auth
+    volumes:
+      - vortexbank_keys:/keys
+    depends_on:
+      - auth-db
+    networks:
+      - vortexbank_net
+
+  # 3. Banco de Dados de Identidade & Contas (PostgreSQL 16)
+  auth-db:
+    image: postgres:16-alpine
+    container_name: vortexbank_auth_db
+    restart: always
+    environment:
+      POSTGRES_DB: vortexbank_auth
+      POSTGRES_USER: vortexbank_user
+      POSTGRES_PASSWORD: vortexbank_secure_pass_2026
+    volumes:
+      - vortexbank_auth_data:/var/lib/postgresql/data
+    networks:
+      - vortexbank_net
+
+  # 4. Motor de Transações, Pix & Ledger .NET 10 (C#)
+  transactions-api:
+    build:
+      context: ..
+      dockerfile: src/Services/TransactionsService/Api/Dockerfile
+    container_name: vortexbank_trans_api
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__TransDb: Host=trans-db;Port=5432;Database=vortexbank_trans;Username=vortexbank_user;Password=vortexbank_secure_pass_2026
+      Redis__ConnectionString: redis:6379,password=vortexbank_redis_pass_2026
+      Auth__PublicKeyPath: /keys/auth-public.pem
+      Swagger__PathBase: /swagger/transactions
+    volumes:
+      - vortexbank_keys:/keys:ro
+    depends_on:
+      - auth-api
+      - trans-db
+      - redis
+    networks:
+      - vortexbank_net
+
+  # 5. Banco de Dados Transacional & Ledger (PostgreSQL 16)
+  trans-db:
+    image: postgres:16-alpine
+    container_name: vortexbank_trans_db
+    restart: always
+    environment:
+      POSTGRES_DB: vortexbank_trans
+      POSTGRES_USER: vortexbank_user
+      POSTGRES_PASSWORD: vortexbank_secure_pass_2026
+    volumes:
+      - vortexbank_trans_data:/var/lib/postgresql/data
+    networks:
+      - vortexbank_net
+
+  # 6. Cache em Memória & Concorrência (Redis 7)
+  redis:
+    image: redis:7-alpine
+    container_name: vortexbank_redis
+    restart: always
+    command: redis-server --requirepass vortexbank_redis_pass_2026
+    volumes:
+      - vortexbank_redis_data:/data
+    networks:
+      - vortexbank_net
+
+networks:
+  vortexbank_net:
+    driver: bridge
+
+volumes:
+  vortexbank_auth_data:
+  vortexbank_trans_data:
+  vortexbank_redis_data:
+  vortexbank_keys:
