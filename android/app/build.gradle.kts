@@ -20,9 +20,31 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        create("release") {
+            val keyFile = file("vortexbank-release.jks")
+            if (keyFile.exists()) {
+                storeFile = keyFile
+                storePassword = System.getenv("VORTEX_KEYSTORE_PASS") ?: "vortexbank_release_key"
+                keyAlias = System.getenv("VORTEX_KEY_ALIAS") ?: "vortexbank"
+                keyPassword = System.getenv("VORTEX_KEY_PASS") ?: "vortexbank_release_key"
+                enableV1Signing = true
+                enableV2Signing = true
+                enableV3Signing = true
+            } else {
+                val debugConfig = signingConfigs.getByName("debug")
+                storeFile = debugConfig.storeFile
+                storePassword = debugConfig.storePassword
+                keyAlias = debugConfig.keyAlias
+                keyPassword = debugConfig.keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

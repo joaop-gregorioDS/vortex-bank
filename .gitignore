@@ -69,3 +69,5 @@ android/.externalNativeBuild/
 android/.cxx/
 *.apk
 *.aab
+*.jks
+*.keystore
