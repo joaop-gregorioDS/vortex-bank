@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__AuthDb: Host=auth-db;Port=5432;Database=vortexbank_auth;Username=vortexbank_user;Password=vortexbank_secure_pass_2026
+      ConnectionStrings__AuthDb: Host=auth-db;Port=5432;Database=${VORTEX_AUTH_DB_NAME:-vortexbank_auth};Username=${VORTEX_AUTH_DB_USER:-vortexbank_user};Password=${VORTEX_AUTH_DB_PASS}
       KEY_DIR: /keys
       Swagger__PathBase: /swagger/auth
     volumes:
@@ -42,9 +42,9 @@ services:
     container_name: vortexbank_auth_db
     restart: always
     environment:
-      POSTGRES_DB: vortexbank_auth
-      POSTGRES_USER: vortexbank_user
-      POSTGRES_PASSWORD: vortexbank_secure_pass_2026
+      POSTGRES_DB: ${VORTEX_AUTH_DB_NAME:-vortexbank_auth}
+      POSTGRES_USER: ${VORTEX_AUTH_DB_USER:-vortexbank_user}
+      POSTGRES_PASSWORD: ${VORTEX_AUTH_DB_PASS}
     volumes:
       - vortexbank_auth_data:/var/lib/postgresql/data
     networks:
@@ -59,8 +59,8 @@ services:
     restart: always
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ConnectionStrings__TransDb: Host=trans-db;Port=5432;Database=vortexbank_trans;Username=vortexbank_user;Password=vortexbank_secure_pass_2026
-      Redis__ConnectionString: redis:6379,password=vortexbank_redis_pass_2026
+      ConnectionStrings__TransDb: Host=trans-db;Port=5432;Database=${VORTEX_TRANS_DB_NAME:-vortexbank_trans};Username=${VORTEX_TRANS_DB_USER:-vortexbank_user};Password=${VORTEX_TRANS_DB_PASS}
+      Redis__ConnectionString: redis:6379,password=${VORTEX_REDIS_PASS}
       Auth__PublicKeyPath: /keys/auth-public.pem
       Swagger__PathBase: /swagger/transactions
     volumes:
@@ -78,9 +78,9 @@ services:
     container_name: vortexbank_trans_db
     restart: always
     environment:
-      POSTGRES_DB: vortexbank_trans
-      POSTGRES_USER: vortexbank_user
-      POSTGRES_PASSWORD: vortexbank_secure_pass_2026
+      POSTGRES_DB: ${VORTEX_TRANS_DB_NAME:-vortexbank_trans}
+      POSTGRES_USER: ${VORTEX_TRANS_DB_USER:-vortexbank_user}
+      POSTGRES_PASSWORD: ${VORTEX_TRANS_DB_PASS}
     volumes:
       - vortexbank_trans_data:/var/lib/postgresql/data
     networks:
@@ -91,7 +91,7 @@ services:
     image: redis:7-alpine
     container_name: vortexbank_redis
     restart: always
-    command: redis-server --requirepass vortexbank_redis_pass_2026
+    command: redis-server --requirepass ${VORTEX_REDIS_PASS}
     volumes:
       - vortexbank_redis_data:/data
     networks:
