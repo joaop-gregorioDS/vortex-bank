@@ -54,3 +54,18 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 .DS_Store
+
+# Android / Gradle / Kotlin
+.gradle/
+**/build/
+android/.gradle/
+android/.kotlin/
+android/.idea/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+*.apk
+*.aab

@@ -1,7 +1,11 @@
 # Vortex Bank · Next-Gen Financial Core & Monorepo
 
 [![Live Demo Web](https://img.shields.io/badge/Live%20Demo-bank.vortexsoftware.tech-0A84FF?style=for-the-badge&logo=google-cloud&logoColor=white)](https://bank.vortexsoftware.tech)
+[![Download Android](https://img.shields.io/badge/Download%20APK-Android%20(Kotlin%20Compose)-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)
 [![Download Desktop](https://img.shields.io/badge/Download%20App-Windows%20x64%20(Tauri%202)-E11D48?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin%202.4-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
 ![Tauri 2](https://img.shields.io/badge/Tauri%202-FFC131?style=for-the-badge&logo=tauri&logoColor=black)
 ![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
 ![.NET 10](https://img.shields.io/badge/.NET%2010-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
@@ -14,6 +18,7 @@
 
 Plataforma bancária digital e motor transacional de alta fidelidade desenvolvido como **Monorepo Unificado**:
 - 🌐 **Web SPA:** React 19 + TypeScript + Vite em produção na nuvem.
+- 📱 **Mobile Nativo Android:** Aplicativo nativo em **Kotlin + Jetpack Compose + Material 3** conectado diretamente à nuvem de produção.
 - 💻 **Desktop Nativo:** Aplicativo Windows de alta performance em **Tauri 2 (Rust) + React 19**.
 - ⚙️ **Backend Core:** Microsserviços em **C# / .NET 10** com Clean Architecture, PostgreSQL 16 e Redis 7.
 
@@ -24,6 +29,7 @@ Plataforma bancária digital e motor transacional de alta fidelidade desenvolvid
 - **Aplicação Web em Produção:** 👉 **[https://bank.vortexsoftware.tech](https://bank.vortexsoftware.tech)**
 - **Documentação Interativa Swagger:** 👉 **[https://bank.vortexsoftware.tech/swagger](https://bank.vortexsoftware.tech/swagger)**
 - **Instalador Desktop Windows:** 👉 **[Baixar Vortex Bank x64 (.exe)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)**
+- **Aplicativo Mobile Android:** 👉 **[Baixar Vortex Bank APK (.apk)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)**
 
 ---
 
@@ -35,10 +41,14 @@ vortex-bank/
 │   ├── Services/
 │   │   ├── AuthService/         # Identidade, Sessão e Chaves Assimétricas ECDsa
 │   │   └── TransactionsService/ # Livro-razão (Ledger), Pix, TED, Boletos e Cartões
+├── android/            # Aplicativo Mobile Nativo Android (Kotlin + Jetpack Compose)
+│   ├── app/src/main/            # Telas Compose, ViewModels, Cliente HTTP OkHttp e PDF nativo
+│   ├── app/src/test/            # Testes unitários automatizados (regras de ledger e cartões)
+│   └── DIRETRIZES.md            # Especificações de design, paleta e regras da versão mobile
 ├── desktop/            # Aplicativo Desktop Nativo Windows (Tauri 2 + Rust + React 19)
 │   ├── src/                     # Telas do Desktop (Login, Pix, Extrato, Cartões, Invest)
 │   ├── src-tauri/               # Backend nativo Rust (processo de comunicação segura)
-│   └── DIRETRIZES.md            # Especificações de design e regras de negócio do app
+│   └── DIRETRIZES.md            # Especificações de design e regras de negócio do desktop
 ├── web/                # Frontend Web SPA (React 19 + Vite)
 ├── tests/              # Bateria de testes automatizados (.NET xUnit + Testcontainers)
 ├── docker/             # Configurações de containerização, Nginx Gateway e deploy VPS
@@ -56,38 +66,42 @@ vortex-bank/
   - Livro-razão (*double-entry bookkeeping*) com garantia de consistência ACID.
   - Transferências Pix instantâneas, extratos detalhados e saldos consolidados.
   - Cache de alta performance no Redis 7 e persistência relacional no PostgreSQL 16.
+- **Aplicativo Mobile Nativo Android (`android`):**
+  - Desenvolvido 100% nativo com **Kotlin** e **Jetpack Compose** (Material 3).
+  - Telas reativas: Home com saldos e limites, Central Pix, Extrato com exportação nativa em PDF via `android.graphics.pdf.PdfDocument`, Gestão de Cartões, Boletos e Simulador Vortex Invest.
+  - Conexão direta com a nuvem de produção (`https://bank.vortexsoftware.tech`) com suporte a chave de idempotência (`Idempotency-Key`).
+- **Aplicativo Desktop Nativo (`desktop`):**
+  - Construído com **Tauri 2** e **Rust**, garantindo baixíssimo consumo de memória RAM (< 40 MB).
+  - Janela nativa com barra lateral fixa, atalhos rápidos e acesso ao Swagger.
 - **Frontend SPA Bancário Moderno (`web`):**
   - Desenvolvido em **React 19** com **TypeScript** e **Vite**.
   - Dashboard financeiro responsivo com extrato, Pix, cartões e investimentos.
   - Geração e exportação nativa de comprovantes e extrato em PDF client-side (`jsPDF`).
-- **Aplicativo Desktop Nativo (`desktop`):**
-  - Construído com **Tauri 2** e **Rust**, garantindo baixíssimo consumo de memória RAM (< 40 MB).
-  - Janela nativa com barra lateral fixa, atalhos rápidos e acesso ao Swagger.
-  - Login rápido com os titulares de demonstração:
-    - **Ana Ribeiro:** `ana.ribeiro@vortexbank.demo`
-    - **Bruno Lima:** `bruno.lima@vortexbank.demo`
+- **Titulares de Demonstração em Todas as Plataformas:**
+  - **Ana Ribeiro:** `ana.ribeiro@vortexbank.demo` (Senha: `Ana-demo-2026`)
+  - **Bruno Lima:** `bruno.lima@vortexbank.demo` (Senha: `Bruno-demo-2026`)
 
 ---
 
 ## Arquitetura de Comunicação
 
 ```text
-     Navegador Web (HTTPS)               Cliente Desktop Nativo (Tauri 2)
-              │                                         │
-              ▼                                         ▼
-   bank.vortexsoftware.tech                 Processo Nativo Rust (IPC)
-              │                                         │
-              └────────────────────┬────────────────────┘
-                                   │
-                                   ▼
-                   Nginx Gateway Reverso (:5060)
-                                   │
-                   ┌───────────────┴───────────────┐
-                   ▼                               ▼
-         AuthService (:8080)             TransactionsService (:8080)
-                   │                               │
-                   ▼                               ▼
-         PostgreSQL (auth_db)            PostgreSQL (trans_db) + Redis 7
+  Navegador Web (HTTPS)       Cliente Desktop (Tauri 2)        App Android Nativo (Kotlin)
+           │                             │                                 │
+           ▼                             ▼                                 ▼
+ bank.vortexsoftware.tech    Processo Nativo Rust (IPC)         OkHttp / Coroutines (HTTPS)
+           │                             │                                 │
+           └─────────────────────────────┼─────────────────────────────────┘
+                                         │
+                                         ▼
+                         Nginx Gateway Reverso (:5060)
+                                         │
+                         ┌───────────────┴───────────────┐
+                         ▼                               ▼
+               AuthService (:8080)             TransactionsService (:8080)
+                         │                               │
+                         ▼                               ▼
+               PostgreSQL (auth_db)            PostgreSQL (trans_db) + Redis 7
 ```
 
 ---
@@ -98,6 +112,7 @@ vortex-bank/
 - .NET 10 SDK
 - Node.js 20+ e npm
 - Rust e Cargo (para compilar o app desktop)
+- Android SDK / JDK 17+ (para o app Android)
 - Docker e Docker Compose
 
 ### 1. Iniciar Infraestrutura e Bancos de Dados
@@ -125,6 +140,14 @@ npm run dev
 cd desktop
 npm install
 npm run tauri dev
+```
+
+### 5. Executar o Aplicativo Mobile Android
+```bash
+cd android
+./gradlew test
+./gradlew assembleDebug
+# Ou abra o diretório android/ no Android Studio
 ```
 
 ---
