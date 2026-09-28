@@ -7,6 +7,7 @@ x86/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+*.exe
 
 # Visual Studio / VS Code / Rider
 .vs/
@@ -20,10 +21,22 @@ x86/
 # Node & Frontend
 node_modules/
 web/node_modules/
+desktop/node_modules/
 dist/
 web/dist/
+desktop/dist/
 .vite/
 .vite-temp/
+desktop/.vite/
+desktop/.vite-temp/
+*.tsbuildinfo
+
+# Desktop / Tauri / Rust
+**/src-tauri/target/
+**/target/
+src-tauri/target/
+src-tauri/gen/
+desktop/src-tauri/gen/
 
 # Environment and Secrets
 .env
