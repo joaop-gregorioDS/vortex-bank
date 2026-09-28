@@ -43,12 +43,10 @@ vortex-bank/
 │   │   └── TransactionsService/ # Livro-razão (Ledger), Pix, TED, Boletos e Cartões
 ├── android/            # Aplicativo Mobile Nativo Android (Kotlin + Jetpack Compose)
 │   ├── app/src/main/            # Telas Compose, ViewModels, Cliente HTTP OkHttp e PDF nativo
-│   ├── app/src/test/            # Testes unitários automatizados (regras de ledger e cartões)
-│   └── DIRETRIZES.md            # Especificações de design, paleta e regras da versão mobile
+│   └── app/src/test/            # Testes unitários automatizados (regras de ledger e cartões)
 ├── desktop/            # Aplicativo Desktop Nativo Windows (Tauri 2 + Rust + React 19)
 │   ├── src/                     # Telas do Desktop (Login, Pix, Extrato, Cartões, Invest)
-│   ├── src-tauri/               # Backend nativo Rust (processo de comunicação segura)
-│   └── DIRETRIZES.md            # Especificações de design e regras de negócio do desktop
+│   └── src-tauri/               # Backend nativo Rust (processo de comunicação segura)
 ├── web/                # Frontend Web SPA (React 19 + Vite)
 ├── tests/              # Bateria de testes automatizados (.NET xUnit + Testcontainers)
 ├── docker/             # Configurações de containerização, Nginx Gateway e deploy VPS
