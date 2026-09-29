@@ -1,0 +1,18 @@
+# Xcode
+.DS_Store
+*/.DS_Store
+DerivedData/
+build/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# User-specific Xcode settings
+*.xcuserstate
+project.xcworkspace/xcuserdata/
+*.xcuserdatad
+xcuserdata/
+
+# Swift Package Manager
+.swiftpm/

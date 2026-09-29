@@ -1,6 +1,8 @@
 # Vortex Bank · Next-Gen Financial Core & Monorepo
 
 [![Live Demo Web](https://img.shields.io/badge/Live%20Demo-bank.vortexsoftware.tech-0A84FF?style=for-the-badge&logo=google-cloud&logoColor=white)](https://bank.vortexsoftware.tech)
+![iOS](https://img.shields.io/badge/iOS%2017%2B-SwiftUI-000000?style=for-the-badge&logo=apple&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift%205.10%2B-F05138?style=for-the-badge&logo=swift&logoColor=white)
 [![Download Android](https://img.shields.io/badge/Download%20APK-Android%20(Kotlin%20Compose)-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)
 [![Download Desktop](https://img.shields.io/badge/Download%20App-Windows%20x64%20(Tauri%202)-E11D48?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/joaop-gregorioDS/vortex-bank/releases/latest)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
@@ -19,6 +21,7 @@
 Plataforma bancária digital e motor transacional de alta fidelidade desenvolvido como **Monorepo Unificado**:
 - 🌐 **Web SPA:** React 19 + TypeScript + Vite em produção na nuvem.
 - 📱 **Mobile Nativo Android:** Aplicativo nativo em **Kotlin + Jetpack Compose + Material 3** conectado diretamente à nuvem de produção.
+- 🍎 **Mobile Nativo iOS:** Aplicativo nativo em **Swift + SwiftUI** para iPhone conectado diretamente à nuvem de produção.
 - 💻 **Desktop Nativo:** Aplicativo Windows de alta performance em **Tauri 2 (Rust) + React 19**.
 - ⚙️ **Backend Core:** Microsserviços em **C# / .NET 10** com Clean Architecture, PostgreSQL 16 e Redis 7.
 
@@ -44,6 +47,9 @@ vortex-bank/
 ├── android/            # Aplicativo Mobile Nativo Android (Kotlin + Jetpack Compose)
 │   ├── app/src/main/            # Telas Compose, ViewModels, Cliente HTTP OkHttp e PDF nativo
 │   └── app/src/test/            # Testes unitários automatizados (regras de ledger e cartões)
+├── ios/                # Aplicativo Mobile Nativo iOS (Swift + SwiftUI)
+│   ├── VortexBank/              # Telas SwiftUI, ViewModels, APIClient, Design System Manrope e PDF nativo
+│   └── VortexBankTests/         # Testes unitários automatizados de regras e URLs de produção
 ├── desktop/            # Aplicativo Desktop Nativo Windows (Tauri 2 + Rust + React 19)
 │   ├── src/                     # Telas do Desktop (Login, Pix, Extrato, Cartões, Invest)
 │   └── src-tauri/               # Backend nativo Rust (processo de comunicação segura)
@@ -68,6 +74,10 @@ vortex-bank/
   - Desenvolvido 100% nativo com **Kotlin** e **Jetpack Compose** (Material 3).
   - Telas reativas: Home com saldos e limites, Central Pix, Extrato com exportação nativa em PDF via `android.graphics.pdf.PdfDocument`, Gestão de Cartões, Boletos e Simulador Vortex Invest.
   - Conexão direta com a nuvem de produção (`https://bank.vortexsoftware.tech`) com suporte a chave de idempotência (`Idempotency-Key`).
+- **Aplicativo Mobile Nativo iOS (`ios`):**
+  - Desenvolvido 100% nativo com **Swift** e **SwiftUI** para iPhone (iOS 17+).
+  - Telas reativas: Home com saldos e faturas, Central Pix, Extrato com agrupamento diário e exportação nativa em PDF via `UIGraphicsPDFRenderer`, Central de Cartões com CVV sob demanda, Central de Pagamentos e Simulador Vortex Invest.
+  - Conexão direta com a nuvem de produção (`https://bank.vortexsoftware.tech`) com suporte a token Bearer, cookie HttpOnly `bankcore_refresh` e idempotência financeira (`Idempotency-Key`).
 - **Aplicativo Desktop Nativo (`desktop`):**
   - Construído com **Tauri 2** e **Rust**, garantindo baixíssimo consumo de memória RAM (< 40 MB).
   - Janela nativa com barra lateral fixa, atalhos rápidos e acesso ao Swagger.
@@ -147,6 +157,14 @@ cd android
 ./gradlew assembleDebug
 # Ou abra o diretório android/ no Android Studio
 ```
+
+### 6. Executar o Aplicativo Mobile iOS
+```bash
+cd ios
+open VortexBank.xcodeproj
+# Selecione o target VortexBank e execute no simulador com Cmd + R (ou Cmd + U para rodar os testes de regras)
+```
+
 
 ---
 

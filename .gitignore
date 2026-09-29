@@ -71,3 +71,11 @@ android/.cxx/
 *.aab
 *.jks
 *.keystore
+
+# iOS / Xcode / Swift
+ios/.DS_Store
+ios/DerivedData/
+ios/build/
+ios/*.xcuserstate
+ios/**/xcuserdata/
+ios/.swiftpm/
