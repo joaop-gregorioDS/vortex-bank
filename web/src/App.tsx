@@ -99,18 +99,6 @@ function Enter({ setSession }: { setSession: (session: Session) => void }) {
     }
   }
 
-  function enterByCpf(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const digits = String(data.get("cpf")).replace(/\D/g, "");
-    const person = demos.find((item) => item[3].replace(/\D/g, "") === digits);
-    if (!person) {
-      setError("CPF não encontrado neste simulador.");
-      return;
-    }
-    void enter(person[1], String(data.get("password")));
-  }
-
   return (
     <main id="conteudo" className="login-screen">
       <section className="login-card">
@@ -127,13 +115,7 @@ function Enter({ setSession }: { setSession: (session: Session) => void }) {
             </button>
           ))}
         </div>
-        <div className="rule">OU CREDENCIAIS MANUAIS</div>
-        <form onSubmit={enterByCpf}>
-          <label>CPF do titular<input name="cpf" inputMode="numeric" placeholder="000.000.000-00" required /></label>
-          <label>Senha de acesso<input name="password" type="password" placeholder="••••••••" required /></label>
-          {error && <p className="error">{error}</p>}
-          <button className="button button-wide" type="submit">Acessar conta segura →</button>
-        </form>
+        {error && <p className="error" role="alert">{error}</p>}
         <p className="fine">versão 1.0 · Vortex Software</p>
       </section>
     </main>
