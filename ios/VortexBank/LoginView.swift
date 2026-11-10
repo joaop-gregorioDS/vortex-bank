@@ -3,9 +3,6 @@ import SwiftUI
 struct LoginView: View {
     var store: BankStore
     @Environment(\.fontStep) private var fontStep
-    @State private var cpf = ""
-    @State private var password = ""
-    @FocusState private var focused: Bool
 
     var body: some View {
         NavigationStack {
@@ -30,13 +27,12 @@ struct LoginView: View {
                             .foregroundStyle(Color.vortexAction)
                     }
                     .font(VortexFont.font(fontStep, extra: 14, weight: .bold))
-                    Text("Entre com um titular ou com CPF e senha.")
+                    Text("Entre com um dos titulares de demonstração.")
                         .font(VortexFont.font(fontStep, extra: -1))
                         .foregroundStyle(Color.vortexSecondaryText)
                         .multilineTextAlignment(.center)
                     ForEach(DemoDirectory.all) { holder in
                         Button {
-                            focused = false
                             Task { await store.signIn(holder: holder) }
                         } label: {
                             HStack(spacing: 12) {
@@ -61,20 +57,10 @@ struct LoginView: View {
                         .buttonStyle(.plain)
                         .disabled(store.isActing)
                     }
-                    Text("ou informe CPF e senha")
-                        .font(VortexFont.font(fontStep, extra: -2))
-                        .foregroundStyle(Color.vortexSecondaryText)
-                    FieldLabel(title: "CPF", text: $cpf, keyboard: .numberPad)
-                        .focused($focused)
-                        .onChange(of: cpf) { _, newValue in
-                            let masked = BankFormat.maskCPF(newValue)
-                            if masked != newValue { cpf = masked }
-                        }
-                    FieldLabel(title: "Senha", text: $password, secure: true)
-                        .focused($focused)
-                    FilledButton(title: "Entrar", busy: store.isActing) {
-                        focused = false
-                        Task { await store.signIn(cpf: cpf, password: password) }
+                    if store.isActing {
+                        ProgressView("Entrando…")
+                            .font(VortexFont.font(fontStep, extra: -2))
+                            .foregroundStyle(Color.vortexSecondaryText)
                     }
                 }
                 .vortexCard()
@@ -82,14 +68,7 @@ struct LoginView: View {
             }
             .padding(.bottom, 28)
         }
-        .scrollDismissesKeyboard(.interactively)
         .background(Color.vortexBackground)
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("OK") { focused = false }
-            }
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
 }

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { explain, holders, login, type Session } from "../api";
 import { initials } from "../format";
 import { Shield } from "../mark";
@@ -19,18 +19,6 @@ export function Login({ onEnter }: { onEnter: (session: Session) => void }) {
     }
   }
 
-  function enterByCpf(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const digits = String(data.get("cpf")).replace(/\D/g, "");
-    const person = holders.find((item) => item.cpf.replace(/\D/g, "") === digits);
-    if (!person) {
-      setError("CPF não encontrado neste simulador.");
-      return;
-    }
-    void enter(person.email, String(data.get("password")));
-  }
-
   return (
     <div className="app-frame">
       <p className="sim-banner">Ambiente simulado. Nenhum valor é real.</p>
@@ -49,13 +37,8 @@ export function Login({ onEnter }: { onEnter: (session: Session) => void }) {
               </button>
             ))}
           </div>
-          <div className="rule">OU CPF E SENHA</div>
-          <form onSubmit={enterByCpf}>
-            <label>CPF do titular<input name="cpf" inputMode="numeric" placeholder="000.000.000-00" required /></label>
-            <label>Senha de acesso<input name="password" type="password" placeholder="••••••••" required /></label>
-            {error && <p className="error">{error}</p>}
-            <button className="button button-wide" type="submit" disabled={busy}>{busy ? "Entrando…" : "Acessar conta segura →"}</button>
-          </form>
+          {busy && <p className="muted" role="status">Entrando…</p>}
+          {error && <p className="error" role="alert">{error}</p>}
           <p className="fine">versão 1.0 · Vortex Software</p>
         </section>
       </main>

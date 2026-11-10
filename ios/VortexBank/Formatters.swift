@@ -133,17 +133,6 @@ enum BankFormat {
         return "\(chars[0])\(chars[1])\(chars[2]).\(chars[3])\(chars[4])\(chars[5]).\(chars[6])\(chars[7])\(chars[8])-\(chars[9])\(chars[10])"
     }
 
-    static func maskCPF(_ raw: String) -> String {
-        let digits = raw.filter(\.isNumber).prefix(11)
-        var result = ""
-        for (index, character) in digits.enumerated() {
-            if index == 3 || index == 6 { result.append(".") }
-            if index == 9 { result.append("-") }
-            result.append(character)
-        }
-        return result
-    }
-
     static func greeting(at date: Date = Date()) -> String {
         let hour = BankCalendar.calendar.component(.hour, from: date)
         switch hour {

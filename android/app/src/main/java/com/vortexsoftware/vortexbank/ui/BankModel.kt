@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vortexsoftware.vortexbank.data.BankClient
-import com.vortexsoftware.vortexbank.data.Holders
 import com.vortexsoftware.vortexbank.data.Home
 import com.vortexsoftware.vortexbank.data.Line
 import com.vortexsoftware.vortexbank.data.Profile
@@ -68,15 +67,6 @@ class BankModel(
 
     fun enterHolder(holder: com.vortexsoftware.vortexbank.data.Holder) {
         enter(holder.email, holder.password)
-    }
-
-    fun enterByCpf(cpf: String, password: String) {
-        val person = Holders.byCpf(cpf)
-        if (person == null) {
-            error = "CPF não encontrado neste simulador."
-            return
-        }
-        enter(person.email, password)
     }
 
     fun open(next: Tab) {

@@ -87,8 +87,6 @@ button { cursor: pointer; }
 .avatar-lg { width: 42px; height: 42px; background: linear-gradient(160deg, #fb7185, #9f1239); }
 .persona strong { display: block; font-size: 13px; }
 .persona small, .muted { color: var(--muted); }
-.rule { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 11px; letter-spacing: 1px; margin: 8px 0 14px; }
-.rule::before, .rule::after { content: ""; height: 1px; background: var(--line); flex: 1; }
 .login-card form { text-align: left; }
 label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; margin-bottom: 12px; }
 input, select {

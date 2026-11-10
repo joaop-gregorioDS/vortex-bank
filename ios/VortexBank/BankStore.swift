@@ -25,18 +25,6 @@ final class BankStore {
         await signIn(email: holder.email, password: holder.password)
     }
 
-    func signIn(cpf: String, password: String) async {
-        guard let holder = DemoDirectory.holder(cpf: cpf) else {
-            errorMessage = "CPF não reconhecido nesta demonstração."
-            return
-        }
-        guard !password.isEmpty else {
-            errorMessage = "Informe a senha."
-            return
-        }
-        await signIn(email: holder.email, password: password)
-    }
-
     func signIn(email: String, password: String) async {
         errorMessage = nil
         notice = nil

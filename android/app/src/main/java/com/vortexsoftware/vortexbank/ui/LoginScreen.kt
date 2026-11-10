@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,24 +19,16 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,8 +36,6 @@ import com.vortexsoftware.vortexbank.data.Holders
 
 @Composable
 fun LoginScreen(model: BankModel) {
-    var cpf by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
     Column(
         Modifier
             .fillMaxSize()
@@ -112,57 +101,18 @@ fun LoginScreen(model: BankModel) {
                                 }
                             }
                         }
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
-                            BoxLine()
-                            Text("  OU CPF E SENHA  ", color = Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                            BoxLine()
+                        if (model.busy) {
+                            Text("Entrando…", color = Muted, modifier = Modifier.padding(top = 4.dp, bottom = 8.dp))
                         }
-                        Field("CPF do titular", cpf, { cpf = it }, keyboard = KeyboardType.Number, placeholder = "000.000.000-00")
-                        Field("Senha de acesso", password, { password = it }, secret = true, placeholder = "••••••••")
                         if (model.error.isNotBlank()) {
-                            Text(model.error, color = RosePressed, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                            Text(model.error, color = RosePressed, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp, bottom = 8.dp))
                         }
-                        PrimaryButton(
-                            text = if (model.busy) "Entrando…" else "Acessar conta segura →",
-                            enabled = !model.busy,
-                        ) { model.enterByCpf(cpf, password) }
                         Spacer(Modifier.height(12.dp))
                         Text("versão 1.0 · Vortex Software", color = Muted, fontSize = 12.sp)
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun RowScope.BoxLine() {
-    Spacer(Modifier.weight(1f).height(1.dp).background(Line))
-}
-
-@Composable
-private fun Field(
-    label: String,
-    value: String,
-    onChange: (String) -> Unit,
-    secret: Boolean = false,
-    keyboard: KeyboardType = KeyboardType.Text,
-    placeholder: String = "",
-) {
-    Column(Modifier.fillMaxWidth().padding(bottom = 10.dp)) {
-        Text(label, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-        Spacer(Modifier.height(4.dp))
-        OutlinedTextField(
-            value = value,
-            onValueChange = onChange,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            placeholder = { Text(placeholder, color = Muted) },
-            visualTransformation = if (secret) PasswordVisualTransformation() else androidx.compose.ui.text.input.VisualTransformation.None,
-            keyboardOptions = KeyboardOptions(keyboardType = keyboard),
-            shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
-            colors = fieldColors(),
-        )
     }
 }
 
